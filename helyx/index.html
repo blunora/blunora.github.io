@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09080d">
+  <meta name="description" content="HELYX is a private iOS workspace for managing an Etsy poster business, with shop analytics, creative tools, Pinterest workflows, and an in-app market research interface.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HELYX by BLUNORA — Etsy Seller Workspace">
+  <meta property="og:description" content="A focused iOS workspace for an Etsy poster business. EverBee Research API integration is pending developer approval.">
+  <meta property="og:url" content="https://blunora.app/helyx/">
+  <title>HELYX by BLUNORA — Etsy Seller Workspace</title>
+  <link rel="canonical" href="https://blunora.app/helyx/">
+  <link rel="icon" href="../assets/hermes_glyph.png" type="image/png">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #09080d;
+      --surface: rgba(22, 19, 29, .76);
+      --surface-raised: rgba(29, 25, 38, .84);
+      --text: #f7f5fa;
+      --muted: #b8b2c3;
+      --dim: #8b8498;
+      --line: rgba(232, 223, 250, .105);
+      --lilac: #c7a9f2;
+      --lilac-light: #e0d2fb;
+      --lilac-wash: rgba(199, 169, 242, .09);
+      --max: 1120px;
+      --radius: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse 60% 42% at 82% -9%, rgba(130, 92, 188, .18), transparent 74%),
+        radial-gradient(ellipse 38% 32% at -8% 34%, rgba(84, 66, 119, .10), transparent 74%),
+        var(--bg);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--lilac); outline-offset: 4px; border-radius: 7px; }
+    .wrap { width: min(var(--max), calc(100% - 56px)); margin-inline: auto; }
+    .site-header { position: sticky; z-index: 10; top: 0; border-bottom: 1px solid rgba(255,255,255,.055); background: rgba(9,8,13,.72); backdrop-filter: blur(20px) saturate(1.14); -webkit-backdrop-filter: blur(20px) saturate(1.14); }
+    .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand img { display: block; width: 124px; height: auto; }
+    .brand-by { padding-left: 12px; border-left: 1px solid var(--line); color: var(--dim); font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+    .header-nav { display: flex; align-items: center; gap: 25px; }
+    .header-nav a { color: var(--muted); font-size: 12px; text-decoration: none; transition: color .18s ease; }
+    .header-nav a:hover { color: var(--text); }
+    .header-nav .nav-demo { padding: 9px 14px; border: 1px solid rgba(199,169,242,.24); border-radius: 999px; background: rgba(199,169,242,.07); color: var(--lilac-light); }
+    main { overflow: clip; }
+    .hero { position: relative; display: grid; grid-template-columns: minmax(0,1.15fr) minmax(300px,.85fr); align-items: center; gap: clamp(34px,7vw,96px); padding-block: clamp(72px,11vw,136px) clamp(76px,10vw,120px); }
+    .hero-copy { position: relative; z-index: 1; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; color: var(--lilac); font-size: 10px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+    .eyebrow::before { width: 19px; height: 1px; background: currentColor; content: ""; }
+    h1 { max-width: 700px; margin: 0; font-size: clamp(44px,7.2vw,82px); font-weight: 590; letter-spacing: -.065em; line-height: .99; }
+    h1 span { color: #cdb6ed; }
+    .hero-lede { max-width: 570px; margin: 24px 0 0; color: var(--muted); font-size: clamp(16px,1.8vw,19px); line-height: 1.65; }
+    .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .button { min-height: 47px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 18px; border: 1px solid transparent; border-radius: 999px; font-size: 12px; font-weight: 650; text-decoration: none; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+    .button:hover { transform: translateY(-1px); }
+    .button-primary { border-color: rgba(233,220,255,.26); background: linear-gradient(145deg,rgba(212,190,248,.18),rgba(158,126,203,.105)); color: #f1e8ff; box-shadow: inset 0 1px 0 rgba(255,255,255,.11), 0 8px 28px rgba(80,51,120,.12); }
+    .button-secondary { border-color: var(--line); background: rgba(255,255,255,.025); color: var(--muted); }
+    .button svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 1.7; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-note { margin: 16px 0 0; color: var(--dim); font-size: 11px; }
+    .hero-art { min-height: 342px; display: grid; place-items: center; position: relative; isolation: isolate; }
+    .hero-art::before, .hero-art::after { position: absolute; z-index: -1; width: min(100%,340px); aspect-ratio: 1; border: 1px solid rgba(218,198,248,.07); border-radius: 50%; content: ""; }
+    .hero-art::after { width: min(79%,270px); border-color: rgba(218,198,248,.055); }
+    .hero-art-halo { position: absolute; width: 235px; aspect-ratio: 1; border-radius: 50%; background: rgba(140,104,191,.12); filter: blur(64px); }
+    .hero-glyph { width: 128px; height: 124px; object-fit: contain; filter: drop-shadow(0 0 26px rgba(200,171,244,.17)); }
+    .hero-orbit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .hero-orbit circle { fill: none; stroke: rgba(231,218,249,.08); stroke-width: 1; }
+    .hero-orbit path { fill: none; stroke: rgba(199,169,242,.2); stroke-width: 1; stroke-dasharray: 2 7; }
+    .orbit-label { position: absolute; display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid rgba(237,228,250,.09); border-radius: 999px; background: rgba(17,15,23,.68); color: #d9d2e4; font-size: 10px; backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 rgba(255,255,255,.035); }
+    .orbit-label::before { width: 5px; height: 5px; border-radius: 50%; background: var(--lilac); box-shadow: 0 0 12px rgba(199,169,242,.48); content: ""; }
+    .orbit-label.shop { top: 15%; left: 1%; }
+    .orbit-label.create { top: 44%; right: -4%; }
+    .orbit-label.research { bottom: 14%; left: 9%; }
+    .hero-caption { position: absolute; bottom: 7px; color: var(--dim); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
+
+    .trust-row { display: grid; grid-template-columns: repeat(3,1fr); border-block: 1px solid var(--line); }
+    .trust-item { min-height: 94px; display: flex; align-items: center; gap: 13px; padding: 18px 26px; }
+    .trust-item + .trust-item { border-left: 1px solid var(--line); }
+    .trust-icon { width: 31px; height: 31px; flex: none; display: grid; place-items: center; border: 1px solid rgba(199,169,242,.12); border-radius: 11px; background: rgba(199,169,242,.045); color: var(--lilac); }
+    .trust-icon svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 1.55; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .trust-item strong { display: block; font-size: 12px; font-weight: 620; }
+    .trust-item small { display: block; margin-top: 2px; color: var(--dim); font-size: 10px; }
+
+    .section { padding-block: clamp(72px,9vw,110px); }
+    .section-heading { max-width: 670px; margin-bottom: 36px; }
+    .section-kicker { margin: 0 0 11px; color: var(--lilac); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(30px,4.7vw,49px); font-weight: 560; letter-spacing: -.05em; line-height: 1.08; }
+    .section-heading p { margin: 15px 0 0; color: var(--muted); font-size: 14px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 13px; }
+    .feature { grid-column: span 2; min-height: 190px; position: relative; overflow: hidden; padding: 24px; border: 1px solid rgba(237,228,250,.085); border-radius: 20px; background: linear-gradient(145deg,rgba(255,255,255,.027),rgba(199,169,242,.018) 48%,rgba(255,255,255,.012)),var(--surface); box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 12px 36px rgba(0,0,0,.12); }
+    .feature:nth-child(4), .feature:nth-child(5) { grid-column: span 3; min-height: 170px; }
+    .feature-icon { width: 37px; height: 37px; display: grid; place-items: center; margin-bottom: 23px; border: 1px solid rgba(199,169,242,.12); border-radius: 13px; background: var(--lilac-wash); color: var(--lilac-light); }
+    .feature-icon svg { width: 19px; height: 19px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .feature h3 { margin: 0; font-size: 15px; font-weight: 620; letter-spacing: -.015em; }
+    .feature p { max-width: 350px; margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .feature-tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 13px; color: var(--dim); font-size: 9px; }
+    .feature-tag::before { width: 4px; height: 4px; border-radius: 50%; background: var(--lilac); content: ""; }
+
+    .research-section { padding-block: clamp(75px,9vw,118px); border-block: 1px solid rgba(232,223,250,.065); background: radial-gradient(ellipse 70% 100% at 96% 55%,rgba(118,84,162,.12),transparent 68%); }
+    .research-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(330px,.86fr); align-items: center; gap: clamp(38px,8vw,104px); }
+    .research-copy h2 { max-width: 610px; }
+    .research-copy > p:not(.section-kicker) { max-width: 610px; margin: 17px 0 0; color: var(--muted); font-size: 14px; }
+    .approval-state { display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; padding: 9px 12px; border: 1px solid rgba(199,169,242,.16); border-radius: 999px; background: rgba(199,169,242,.055); color: #dfd0f4; font-size: 10px; font-weight: 580; }
+    .approval-state span { width: 6px; height: 6px; border-radius: 50%; background: #d4b4ff; box-shadow: 0 0 11px rgba(199,169,242,.48); }
+    .flow { padding: 23px; border: 1px solid rgba(235,224,250,.1); border-radius: 23px; background: linear-gradient(140deg,rgba(255,255,255,.035),rgba(199,169,242,.025) 52%,rgba(255,255,255,.014)),var(--surface); box-shadow: inset 0 1px 0 rgba(255,255,255,.045), 0 22px 50px rgba(0,0,0,.19); }
+    .flow-label { margin: 0 0 16px; color: var(--dim); font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .flow-step { min-height: 61px; display: grid; grid-template-columns: 34px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 9px 0; }
+    .flow-step + .flow-step { border-top: 1px solid rgba(232,223,250,.06); }
+    .step-mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid rgba(199,169,242,.14); border-radius: 11px; background: rgba(199,169,242,.055); color: var(--lilac-light); font-size: 10px; }
+    .step-mark svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .flow-step strong { display: block; font-size: 11px; font-weight: 620; }
+    .flow-step small { display: block; margin-top: 2px; color: var(--dim); font-size: 9px; }
+    .flow-arrow { color: #988aa9; font-size: 15px; }
+    .flow-step.pending .step-mark { color: var(--dim); border-color: rgba(255,255,255,.07); background: rgba(255,255,255,.025); }
+    .flow-footnote { margin: 13px 0 0; padding-top: 13px; border-top: 1px solid rgba(232,223,250,.06); color: var(--dim); font-size: 10px; line-height: 1.55; }
+
+    .guardrails { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(38px,8vw,110px); align-items: start; }
+    .guardrail-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+    .guardrail { display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 10px; padding: 13px 0; border-bottom: 1px solid rgba(232,223,250,.07); }
+    .guardrail svg { width: 16px; height: 16px; margin-top: 3px; stroke: var(--lilac); stroke-width: 1.55; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .guardrail strong { display: block; font-size: 11px; font-weight: 620; }
+    .guardrail p { margin: 3px 0 0; color: var(--dim); font-size: 10px; line-height: 1.55; }
+    .demo { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: clamp(26px,5vw,48px); border: 1px solid rgba(226,211,248,.12); border-radius: 28px; background: radial-gradient(ellipse 65% 120% at 100% 0%,rgba(139,100,192,.16),transparent 73%),linear-gradient(145deg,rgba(255,255,255,.035),rgba(199,169,242,.025) 45%,rgba(255,255,255,.012)),var(--surface-raised); box-shadow: inset 0 1px 0 rgba(255,255,255,.045), 0 22px 64px rgba(0,0,0,.18); }
+    .demo-copy { max-width: 610px; }
+    .demo h2 { font-size: clamp(27px,4vw,40px); }
+    .demo p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+    .demo .button { flex: none; }
+    .site-footer { padding: 32px 0 38px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--dim); font-size: 10px; }
+    .footer-brand img { width: 24px; height: 24px; object-fit: contain; opacity: .82; }
+    .footer-links { display: flex; gap: 19px; }
+    .footer-links a { color: var(--dim); font-size: 10px; text-decoration: none; }
+    .footer-links a:hover { color: var(--text); }
+    .fineprint { margin: 21px 0 0; color: #777181; font-size: 9px; }
+
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: minmax(0,1fr) minmax(250px,.7fr); gap: 20px; }
+      .hero-art { min-height: 285px; }
+      .hero-art::before { width: 270px; }
+      .hero-art::after { width: 215px; }
+      .hero-glyph { width: 100px; height: 100px; }
+      .orbit-label.create { right: -2%; }
+      .feature { grid-column: span 3; }
+      .feature:nth-child(4),.feature:nth-child(5) { grid-column: span 3; }
+      .research-grid { grid-template-columns: minmax(0,1fr) minmax(280px,.9fr); gap: 30px; }
+      .guardrails { grid-template-columns: 1fr; gap: 22px; }
+    }
+    @media (max-width: 600px) {
+      .wrap { width: min(100% - 34px,var(--max)); }
+      .header-inner { min-height: 66px; }
+      .brand img { width: 106px; }
+      .brand { gap: 9px; }
+      .brand-by { padding-left: 9px; font-size: 8px; }
+      .header-nav { gap: 13px; }
+      .header-nav a { font-size: 10px; }
+      .header-nav a:not(.nav-demo) { display: none; }
+      .header-nav .nav-demo { padding: 8px 11px; }
+      .hero { grid-template-columns: 1fr; gap: 14px; padding-block: 62px 54px; }
+      .eyebrow { margin-bottom: 17px; }
+      h1 { max-width: 550px; font-size: clamp(48px,13vw,68px); }
+      .hero-lede { margin-top: 18px; font-size: 15px; }
+      .hero-actions { margin-top: 24px; }
+      .hero-art { min-height: 250px; margin: -3px -12px 0; }
+      .hero-art::before { width: 245px; }
+      .hero-art::after { width: 191px; }
+      .hero-glyph { width: 83px; height: 83px; }
+      .orbit-label { padding: 8px 10px; font-size: 9px; }
+      .orbit-label.shop { top: 8%; left: 5%; }
+      .orbit-label.create { top: 43%; right: 3%; }
+      .orbit-label.research { bottom: 12%; left: 10%; }
+      .hero-caption { bottom: 0; font-size: 8px; }
+      .trust-row { grid-template-columns: 1fr; padding-block: 5px; }
+      .trust-item { min-height: 64px; padding: 10px 2px; }
+      .trust-item + .trust-item { border-left: 0; border-top: 1px solid var(--line); }
+      .trust-icon { width: 29px; height: 29px; }
+      .section { padding-block: 68px; }
+      .section-heading { margin-bottom: 27px; }
+      .feature-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .feature,.feature:nth-child(4),.feature:nth-child(5) { grid-column: span 1; min-height: 206px; padding: 17px 15px; border-radius: 18px; }
+      .feature:nth-child(5) { grid-column: 1 / -1; min-height: 174px; }
+      .feature-icon { width: 34px; height: 34px; margin-bottom: 18px; }
+      .feature h3 { font-size: 13px; }
+      .feature p { font-size: 10px; }
+      .research-grid { grid-template-columns: 1fr; gap: 29px; }
+      .research-section { padding-block: 69px; }
+      .flow { padding: 18px; }
+      .guardrail-list { grid-template-columns: 1fr; }
+      .demo { flex-direction: column; align-items: flex-start; border-radius: 23px; }
+      .demo .button { width: 100%; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .footer-links { gap: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,*::before,*::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="HELYX by BLUNORA">
+        <img src="../assets/hermes_wordmark.png" alt="HELYX">
+        <span class="brand-by">by BLUNORA</span>
+      </a>
+      <nav class="header-nav" aria-label="Page navigation">
+        <a href="#workspace">The workspace</a>
+        <a href="#research">Research integration</a>
+        <a class="nav-demo" href="#demo">Watch demo <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">A BLUNORA iOS app</p>
+        <h1 id="hero-title">A focused workspace for an <span>Etsy poster business.</span></h1>
+        <p class="hero-lede">HELYX brings shop performance, creative work, Pinterest content, and market research into one private iOS workspace—so the work of running a poster shop has a clearer home.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#demo">Watch HELYX Demo <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10 5l5 5-5 5"/></svg></a>
+          <a class="button button-secondary" href="#research">Explore the research approach</a>
+        </div>
+        <p class="hero-note">EverBee Research API access is pending developer approval. No live EverBee research calls are currently made.</p>
+      </div>
+      <div class="hero-art" aria-label="HELYX brand mark">
+        <div class="hero-art-halo" aria-hidden="true"></div>
+        <svg class="hero-orbit" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="168"/><circle cx="200" cy="200" r="133"/><path d="M49 247a153 153 0 0 1 234-129"/><path d="M105 82a153 153 0 0 1 206 85"/></svg>
+        <span class="orbit-label shop">Shop insight</span>
+        <span class="orbit-label create">Creative workflow</span>
+        <span class="orbit-label research">Market research</span>
+        <img class="hero-glyph" src="../assets/hermes_glyph.png" alt="HELYX H mark">
+        <span class="hero-caption">Create · understand · grow</span>
+      </div>
+    </section>
+
+    <div class="wrap trust-row" aria-label="HELYX product principles">
+      <div class="trust-item"><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 16V9m5 7V4m5 12v-5m4 5V7"/><path d="M2 17h16"/></svg></span><span><strong>Shop performance</strong><small>Analytics and Store Goals</small></span></div>
+      <div class="trust-item"><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="3"/><circle cx="7.3" cy="7.2" r="1.2"/><path d="m4 14 4-4 3 2.7 2-2 3 3.3"/></svg></span><span><strong>Creative workspace</strong><small>Photo Vault and Content Creator</small></span></div>
+      <div class="trust-item"><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.2"/><circle cx="10" cy="10" r="3.6"/><path d="m10 10 5-5"/></svg></span><span><strong>Research, with evidence</strong><small>Trend Radar interface in HELYX</small></span></div>
+    </div>
+
+    <section class="wrap section" id="workspace" aria-labelledby="workspace-title">
+      <div class="section-heading">
+        <p class="section-kicker">The HELYX workspace</p>
+        <h2 id="workspace-title">The work around the artwork, in one place.</h2>
+        <p>HELYX is built around the practical workflows of a poster seller: understand shop performance, shape creative assets, and prepare content for the channels used by the business.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature">
+          <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3"/><path d="M3 20h18"/></svg></span>
+          <h3>Etsy analytics</h3>
+          <p>Review Etsy shop performance and available financial reporting in the Analytics workspace.</p>
+          <span class="feature-tag">Connected shop data</span>
+        </article>
+        <article class="feature">
+          <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/><path d="M8 3.8 6.5 5.2m9.5-1.4 1.5 1.4"/></svg></span>
+          <h3>Store Goals</h3>
+          <p>Set a shop goal and follow progress using HELYX’ available reconciled store data.</p>
+          <span class="feature-tag">Goals stay in context</span>
+        </article>
+        <article class="feature">
+          <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9" r="1.5"/><path d="m4.5 17 5-5 3.5 3 2.5-2.2 4 4.2"/></svg></span>
+          <h3>Photo Vault</h3>
+          <p>Keep selected creative assets available inside HELYX for the work that follows.</p>
+          <span class="feature-tag">Creative assets</span>
+        </article>
+        <article class="feature">
+          <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8m-8 4h5"/><path d="m16.5 3 4.5 4.5"/></svg></span>
+          <h3>Content Creator</h3>
+          <p>Prepare visual content and copy for poster storytelling and social publishing workflows.</p>
+          <span class="feature-tag">Create and prepare</span>
+        </article>
+        <article class="feature">
+          <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 3 10.8 13.2"/><path d="m21 3-6.4 18-3.8-7.8L3 9.4 21 3Z"/></svg></span>
+          <h3>Pinterest content</h3>
+          <p>Prepare and manage Pin content through HELYX’ Pinterest workflow, including scheduling features available in the app.</p>
+          <span class="feature-tag">Pinterest workflow</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="research-section" id="research" aria-labelledby="research-title">
+      <div class="wrap research-grid">
+        <div class="research-copy">
+          <p class="section-kicker">Trend Radar · planned provider connection</p>
+          <h2 id="research-title">Market research should arrive with its evidence.</h2>
+          <p>HELYX includes an in-app Trend Radar research interface. The planned EverBee Research API integration is pending EverBee developer approval. Until access is approved and configured, HELYX does not send live requests to EverBee or show invented market data.</p>
+          <p>Subject to EverBee’s approval, scopes, and documented endpoints, the intended read-only research areas include Etsy keyword research, competitor research, listing analysis, and market trends. What HELYX can display will depend on the data the approved API actually provides.</p>
+          <div class="approval-state"><span aria-hidden="true"></span>EverBee developer approval pending</div>
+        </div>
+        <div class="flow" aria-label="Planned EverBee research architecture">
+          <p class="flow-label">Planned request path · not active yet</p>
+          <div class="flow-step"><span class="step-mark" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="5" y="2.5" width="10" height="15" rx="2.2"/><path d="M8 5h4m-3 9.5h2"/></svg></span><span><strong>HELYX iOS</strong><small>Research request from Trend Radar</small></span><span class="flow-arrow" aria-hidden="true">→</span></div>
+          <div class="flow-step"><span class="step-mark" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 2.5 16 5v4.3c0 4-2.5 6.6-6 8.2-3.5-1.6-6-4.2-6-8.2V5l6-2.5Z"/><path d="m7.5 10 1.7 1.7 3.4-3.5"/></svg></span><span><strong>Authenticated HELYX backend</strong><small>Server-side provider access</small></span><span class="flow-arrow" aria-hidden="true">→</span></div>
+          <div class="flow-step pending"><span class="step-mark" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3a12 12 0 0 1 0 14M10 3a12 12 0 0 0 0 14"/></svg></span><span><strong>EverBee Research API</strong><small>Connection awaits developer approval</small></span><span class="flow-arrow" aria-hidden="true">·</span></div>
+          <div class="flow-step"><span class="step-mark" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 16V9m5 7V4m5 12v-5m4 5V7"/><path d="M2 17h16"/></svg></span><span><strong>Structured research in Trend Radar</strong><small>Results with available sources and context</small></span><span class="flow-arrow" aria-hidden="true">✓</span></div>
+          <p class="flow-footnote">The arrows describe the intended design, not a currently active EverBee connection. No EverBee API calls are being made from HELYX at this time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section guardrails" aria-labelledby="guardrails-title">
+      <div>
+        <p class="section-kicker">Built with clear boundaries</p>
+        <h2 id="guardrails-title">Research informs decisions. It does not publish for you.</h2>
+      </div>
+      <div class="guardrail-list">
+        <div class="guardrail"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 16 5v4.3c0 4-2.5 6.6-6 8.2-3.5-1.6-6-4.2-6-8.2V5l6-2.5Z"/><path d="M7 10h6"/></svg><div><strong>Server-side credentials</strong><p>Provider credentials belong on the authenticated HELYX backend, never in the iOS app.</p></div></div>
+        <div class="guardrail"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4v12"/><circle cx="10" cy="10" r="7.5"/></svg><div><strong>Read-only research intent</strong><p>EverBee research is intended for analysis only, subject to the authorization EverBee grants.</p></div></div>
+        <div class="guardrail"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M5 10h10m-7 5h4"/><circle cx="15" cy="5" r="1.6" fill="currentColor" stroke="none"/></svg><div><strong>Usage and budget controls</strong><p>Research usage is designed to be tracked and bounded before a paid provider is activated.</p></div></div>
+        <div class="guardrail"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4h12v12H4z"/><path d="M7 8h6M7 11h6m-6 3h3"/><path d="m13.5 2.5 4 4"/></svg><div><strong>No automatic listing changes</strong><p>Research results do not automatically edit, create, or publish Etsy listings.</p></div></div>
+      </div>
+    </section>
+
+    <section class="wrap" id="demo" aria-labelledby="demo-title">
+      <div class="demo">
+        <div class="demo-copy">
+          <p class="section-kicker">Product walkthrough</p>
+          <h2 id="demo-title">See HELYX in context.</h2>
+          <p>Watch the HELYX demo on Google Drive. EverBee research shown or discussed in a walkthrough should not be interpreted as proof of a live EverBee connection.</p>
+        </div>
+        <a class="button button-primary" href="https://drive.google.com/file/d/1vipQ7YiUsJPfHmvQEIhcufiT2d_5MxpA/view" target="_blank" rel="noopener noreferrer" aria-label="Watch HELYX Demo on Google Drive">Watch HELYX Demo <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4h9v9M16 4 8 12"/><path d="M13 11v5H4V7h5"/></svg></a>
+      </div>
+      <p class="fineprint">The demo opens in Google Drive. Viewing access depends on the file’s Google Drive sharing permissions.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand"><img src="../assets/hermes_glyph.png" alt=""><span>HELYX by BLUNORA</span></div>
+      <nav class="footer-links" aria-label="Footer links"><a href="/privacy/">Privacy Policy</a><a href="mailto:blunorastore@gmail.com">Contact</a><a href="#top">Back to top ↑</a></nav>
+    </div>
+    <div class="wrap"><p class="fineprint">EverBee Research API integration is pending developer approval. This page describes the intended integration and does not claim that live EverBee API access is available.</p></div>
+  </footer>
+</body>
+</html>
